@@ -6,14 +6,13 @@ In order to bootstrap the containers, run - "docker-compose up -d".
 This will bootstrap-
 * 10 "whoami" containers - dummy application to demonstrate Traefik requests distribution, but in order for the POST requests to pass ok and not go to retry 
   phase, set an app that can report back with status code 201, or alternatively edit the web_service.py retry mechanism to check status code 200 rather than 201.
-* traefik container - The actual LB
-* traefik_post_app - Web service that catches POST requests from Traefik and distribute them to all backend containers (a.k.a, the 10 whoami containers), a  
-  workaround for builtin round-robin LB mechanism. 
-* prometheus container - For metrics exposure
+* traefik container - The actual LB.
+* traefik_post_app - Web service that catches POST requests from Traefik and distribute them to all backend containers (a.k.a, the 10 whoami containers), a workaround for builtin round-robin LB mechanism. 
+* prometheus container - For metrics exposure.
 
 **Flow:**
 * Client posts a GET request that is catched by LB and passed to whoami container in a round-robin manner
-* CLient posts a POST request that is catched by LB, and passed to a web service (traefik_post_app container) which then distributes the request to all backend services (10 "whoami" containers).
+* Client posts a POST request that is catched by LB, and passed to a web service (traefik_post_app container) which then distributes the request to all backend services (10 "whoami" containers).
 
 ```
 hfish:~$ curl -X POST -F 'name=hila' -F 'email=hf@test.com' -H Host:whoami.docker.localhost http://127.0.0.1/register
