@@ -1,7 +1,8 @@
 # traefik_exercise
 Traefik demo with an in-house solution for POST requests distribution
 
-In order to bootstrap the containers, run - "docker-compose up -d"
+In order to bootstrap the containers, run - "docker-compose up -d".
+
 This will bootstrap-
 * 10 "whoami" containers - dummy application to demonstrate Traefik requests distribution, but in order for the POST requests to pass ok and not go to retry 
   phase, set an app that can report back with status code 201, or alternatively edit the web_service.py retry mechanism to check status code 200 rather than 201.
